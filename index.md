@@ -3216,33 +3216,3 @@ that is not listed, are off.
   "version" : 1
 }
 ~~~
-
-## Differences from the Google Swift Style Guide
-
-This style guide is based on the Google Swift Style Guide. For readers who know
-the Google guide, these are the rules that differ.
-
-* **Layout:** indentation is 4 spaces instead of 2, and the column limit is 180
-  instead of 100.
-* **Line-wrapping:** wrapped lists may be filled onto as few lines as possible
-  instead of being all-horizontal or all-vertical. Wrapped conditions break
-  before binary operators and continue at +4, with the opening brace on its own
-  line.
-* **Blank lines:** there is at most one blank line in a row.
-* **`#if` blocks:** their contents are not indented.
-* **Imports:** there is a fourth group, for `@_implementationOnly` imports.
-* **Numeric literals:** long integer literals are grouped automatically.
-* **Implicit returns:** single-expression bodies omit `return`.
-* **Identifiers:** only ASCII characters are allowed.
-* **Unsafe code:** `try!`, force-unwraps, force-casts, and implicitly unwrapped
-  optionals are not used outside test code. Only `@IBOutlet` properties are
-  exempt.
-* **Recommended, not required:** `//` instead of `/* ... */` comments,
-  `for`-`where` loops, `!= nil` checks instead of `if let _`, avoiding leading
-  underscores, a one-sentence summary at the start of a documentation comment,
-  and documentation on public declarations.
-* **New sections:** [Indentation](#indentation), [Case](#case),
-  [Implicit Returns](#implicit-returns),
-  [Assignments in Expressions](#assignments-in-expressions),
-  [`forEach` and `for`-`in` Loops](#foreach-and-for-in-loops),
-  [Concurrency](#concurrency), [Tests](#tests), and [Tooling](#tooling).

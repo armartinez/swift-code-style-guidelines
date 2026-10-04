@@ -25,6 +25,5 @@ Then open <http://localhost:4000>.
 ## License
 
 This style guide is based on the Google Swift Style Guide, which is licensed
-under the Apache License, Version 2.0. It has been modified; the changes are
-listed in the "Differences from the Google Swift Style Guide" section of
-`index.md`. See `LICENSE` for the license terms.
+under the Apache License, Version 2.0. It has been modified. See `LICENSE` for
+the license terms.
