@@ -3140,11 +3140,10 @@ formatted by hand.
 
 ### Configuration
 
-The configuration below is the swift-format configuration of Apple's
-open-source [container](https://github.com/apple/container) project, which the
-rules in this style guide follow. A project that has no `.swift-format` file
-gets one at its root with this configuration. Rules set to `false`, and any rule
-that is not listed, are off.
+The configuration below is the swift-format configuration that the rules in
+this style guide follow. A project that has no `.swift-format` file gets one at
+its root with this configuration. Rules set to `false`, and any rule that is not
+listed, are off.
 
 ~~~ json
 {

@@ -5,8 +5,7 @@ guide is based on the
 [Google Swift Style Guide](https://google.github.io/swift/) with the rules
 adapted to the style used in Apple's open-source Swift projects and Apple's
 [API Design Guidelines](https://swift.org/documentation/api-design-guidelines/)
-for naming. Its swift-format rules are those of Apple's
-[container](https://github.com/apple/container) project.
+for naming.
 
 This is not an official guide. It is not published or endorsed by Apple,
 Google, or the Swift project.
