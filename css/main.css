@@ -299,8 +299,10 @@ article .bad pre {
 .good::before,
 .bad::before {
   position: absolute;
-  /* pre margin (7px) + border (1px) + padding (17.5px / 21px) */
-  top: 25.5px;
+  /* The pre's top margin collapses through the wrapper, so the offset is just
+     its border (1px) plus padding (17.5px / 21px). That centers the marker on
+     the first line of code. */
+  top: 18.5px;
   right: 22px;
   z-index: 1;
   font-size: 14px;
@@ -421,7 +423,7 @@ pre.lw-container {
      the first line of code. */
   .good::before,
   .bad::before {
-    top: -4px;
+    top: -11px;
     right: 12px;
     padding: 0 3px;
     border-radius: 4px;

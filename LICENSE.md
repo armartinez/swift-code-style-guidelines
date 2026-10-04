@@ -10,5 +10,5 @@ summarized in
 [Differences from the Google Swift Style Guide](./#differences-from-the-google-swift-style-guide).
 
 <pre class="license">
-{% include_relative LICENSE.txt %}
+{% include_relative LICENSE %}
 </pre>
