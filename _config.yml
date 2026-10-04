@@ -1,0 +1,14 @@
+# Site settings
+title: Swift Code Style Guidelines
+description: >- # this means to ignore newlines until the next unindented line
+  An unofficial Swift style guide based on the Google Swift Style Guide, with
+  the rules adapted to the style used in Apple's open-source Swift projects.
+
+exclude: [Gemfile, Gemfile.lock, README.md, vendor]
+
+# Build settings
+markdown: kramdown
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
