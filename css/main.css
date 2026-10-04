@@ -317,10 +317,6 @@ article .bad pre {
   content: "⛔️";
 }
 
-pre.license {
-  font-size: 13px;
-}
-
 /* Syntax highlighting (swift.org's Rouge theme) */
 
 pre.highlight .c, pre.highlight .cm, pre.highlight .cp, pre.highlight .c1, pre.highlight .cs { color: var(--color-syntax-comments); }
@@ -385,7 +381,7 @@ pre.lw-container {
   padding-top: 1.75em;
 }
 
-/* Footer: kept for the disclaimer and license, styled like body text so it
+/* Footer: kept for the license link, styled like body text so it
    reads as the end of the article rather than as site chrome. */
 
 .site-footer .wrapper {
