@@ -12,7 +12,10 @@
   --color-fill-green-secondary: #f0fff0;
   --color-fill-red-secondary: #fff0f5;
   --color-figure-gray: #000;
+  --color-figure-gray-secondary: #666;
   --color-figure-gray-tertiary: #666;
+  --color-aside-note-background: #f5f5f5;
+  --color-aside-note-border: #666;
   --color-figure-blue: #36f;
   --color-figure-green: #008000;
   --color-figure-red: #f00;
@@ -55,7 +58,10 @@
     --color-fill-green-secondary: #003300;
     --color-fill-red-secondary: #330000;
     --color-figure-gray: #fff;
+    --color-figure-gray-secondary: #ccc;
     --color-figure-gray-tertiary: #b0b0b0;
+    --color-aside-note-background: #222;
+    --color-aside-note-border: #b0b0b0;
     --color-figure-blue: #09f;
     --color-figure-green: #009900;
     --color-figure-red: #ff3333;
@@ -212,6 +218,78 @@ article hr + h3,
 article hr + h4,
 article hr + h5 {
   padding-top: 0.5em;
+}
+
+/* Info box */
+
+.info {
+  margin: 0.5em 0 1.5em;
+  padding: 0.5em;
+  border: 1px solid var(--color-aside-note-border);
+  background-color: var(--color-aside-note-background);
+  color: var(--color-aside-note);
+}
+
+.info::before {
+  content: "ℹ️";
+  float: left;
+  width: 2em;
+  padding-left: 0.125em;
+}
+
+.info p {
+  margin: 0;
+  padding-left: 2em;
+}
+
+/* Collapsible details. Each rule's explanation and examples are in a
+   <details class="more"> element whose summary reads "▶ more detail", as on
+   swift.org. The summary is pulled up into the paragraph's bottom margin, and
+   its own bottom margin leaves 2em between the paragraph's margin and the next
+   content, matching swift.org's spacing. */
+
+details.more {
+  margin-top: -0.85rem;
+}
+
+details.more > summary {
+  display: block;
+  list-style: none;
+  cursor: pointer;
+  margin-bottom: 1.2em;
+}
+
+details.more > summary::-webkit-details-marker {
+  display: none;
+}
+
+details.more > summary::before {
+  content: "▶ ";
+  font-size: 80%;
+}
+
+details.more[open] > summary::before {
+  content: "▼ ";
+}
+
+details.more > summary span {
+  text-transform: lowercase;
+  font-variant: small-caps;
+  color: var(--color-figure-gray-secondary);
+  border-bottom: 1px dashed var(--color-fill-gray);
+}
+
+details.more .less-label,
+details.more[open] .more-label {
+  display: none;
+}
+
+details.more[open] .less-label {
+  display: inline;
+}
+
+details.more > p:first-of-type {
+  margin-top: 0;
 }
 
 /* Code */
@@ -385,11 +463,13 @@ pre.lw-container {
    reads as the end of the article rather than as site chrome. */
 
 .site-footer .wrapper {
-  max-width: 50em;
+  /* The article's width (50em at 17px), so both columns line up. */
+  max-width: 850px;
   margin: 0 auto;
   padding: 0 30px 36px;
   color: var(--color-figure-gray-tertiary);
   font-size: 14px;
+  text-align: center;
 }
 
 .site-footer p {
@@ -459,5 +539,10 @@ pre.lw-container {
   main {
     padding-top: 0;
     background: transparent;
+  }
+
+  .screenonly,
+  details.more > summary {
+    display: none;
   }
 }

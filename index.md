@@ -11,9 +11,11 @@ for naming.
 **This is not an official guide.** It is not published or endorsed by Apple,
 Google, or the Swift project.
 
-This is a living document. A project's own `.swift-format` and CI checks
-override this style guide for that project, because they are what the build
-enforces.
+<div class="info screenonly" markdown="1">
+Each rule starts with a summary, and its explanation and examples can be
+expanded individually. Details are always shown when this page is printed.
+<button type="button" id="toggle-details">Expand all details now</button>
+</div>
 
 ## Table of Contents
 {:.no_toc}
@@ -26,6 +28,9 @@ enforces.
 ### File Names
 
 All Swift source files end with the extension `.swift`.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 In general, the name of a source file best describes the primary entity that it
 contains. A file that primarily contains a single type has the name of that
@@ -47,6 +52,8 @@ For example,
 * A file containing related declarations that are not otherwise scoped under a
   common type or namespace (such as a collection of global mathematical
   functions) can be named descriptively; for example, `Math.swift`.
+
+</details>
 
 ### File Encoding
 
@@ -73,6 +80,9 @@ For any character that has a special escape sequence (`\t`, `\n`, `\r`, `\"`,
 Invisible characters, such as the zero width space and other control characters
 that do not affect the graphical representation of a string, are always written
 as Unicode escape sequences.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 Control characters, combining characters, and variation selectors that _do_
 affect the graphical representation of a string are not escaped when they are
@@ -112,10 +122,15 @@ let skinToneType6 = "🏿"
 ~~~
 {:.bad}
 
+</details>
+
 ### String Literals
 
 Unicode escape sequences (`\u{????}`) and literal code points (for example, `Ü`)
 outside the 7-bit ASCII range are never mixed in the same string.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 More specifically, string literals are either:
 
@@ -153,6 +168,8 @@ let size = "Übergr\u{00F6}\u{00DF}e\n"
 > that some programs might not handle non-ASCII characters properly. If that
 > should happen, those programs are broken and must be fixed.
 
+</details>
+
 ## Source File Structure
 
 ### File Comments
@@ -170,6 +187,9 @@ A source file imports exactly the top-level modules that it needs; nothing more
 and nothing less. If a source file uses definitions from both `UIKit` and
 `Foundation`, it imports both explicitly; it does not rely on the fact that some
 Apple frameworks transitively import others as an implementation detail.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 Imports of whole modules are preferred to imports of individual declarations or
 submodules.
@@ -204,8 +224,7 @@ lexicographically and with exactly one blank line between each group:
 1. Modules imported with `@_implementationOnly`
 1. Modules imported with `@testable` (only present in test sources)
 
-The formatter sorts and groups imports this way automatically. Imports inside
-`#if` blocks are left in the order they are written.
+Imports inside `#if` blocks keep the order in which they are written.
 
 ~~~ swift
 import CoreLocation
@@ -219,6 +238,8 @@ import func Darwin.C.isatty
 ~~~
 {:.good}
 
+</details>
+
 ### Type, Variable, and Function Declarations
 
 In general, most source files contain only one top-level type, especially when
@@ -229,8 +250,10 @@ include multiple related types in a single file. For example,
 * A type and its small related helper types may be defined in the same file.
   This can be useful when restricting certain functionality of the type and/or
   its helpers to only that file and not the rest of the module. At file scope,
-  that restriction is written `private`, not `fileprivate`; the formatter
-  rewrites `fileprivate` declarations at file scope to `private`.
+  that restriction is written `private`, not `fileprivate`.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 The order of types, variables, and functions in a source file, and the order of
 the members of those types, can have a great effect on readability. However,
@@ -275,6 +298,8 @@ class MovieRatingViewController: UITableViewController {
 ~~~
 {:.good}
 
+</details>
+
 ### Overloaded Declarations
 
 When a type has multiple initializers or subscripts, or a file/type has multiple
@@ -297,6 +322,9 @@ Swift code has a column limit of 180 characters. Except as noted below, any line
 that would exceed this limit must be line-wrapped as described in
 [Line-Wrapping](#line-wrapping).
 
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
+
 **Exceptions:**
 
 1. Lines where obeying the column limit is not possible without breaking a
@@ -305,9 +333,14 @@ that would exceed this limit must be line-wrapped as described in
 1. `import` statements.
 1. Code generated by another tool.
 
+</details>
+
 ### Indentation
 
 Code is indented with **4 spaces** per level. Tab characters are never used.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 * A continuation line is indented +4 from the line it continues.
 * The contents of an `#if`, `#elseif`, or `#else` block are **not** indented
@@ -337,6 +370,8 @@ func makeWindow() -> NSWindow {
 ~~~
 {:.bad}
 
+</details>
+
 ### Braces
 
 In general, braces follow Kernighan and Ritchie (K&R) style for non-empty
@@ -361,6 +396,9 @@ blocks with exceptions for Swift-specific constructs and rules:
 
 Semicolons (`;`) are **not used**, either to terminate or separate statements.
 
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
+
 In other words, the only location where a semicolon may appear is inside a
 string literal or a comment.
 
@@ -380,11 +418,16 @@ func printSum(_ a: Int, _ b: Int) {
 ~~~
 {:.bad}
 
+</details>
+
 ### One Statement Per Line
 
 There is **at most** one statement per line, and each statement is followed by a
 line break, except when the line ends with a block that also contains zero
 or one statements.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 ~~~ swift
 guard let value = value else { return 0 }
@@ -417,20 +460,21 @@ work well for early-return and basic cleanup tasks, but less so when the body
 contains a function call with significant logic. When in doubt, write it as a
 multi-line statement.
 
+</details>
+
 ### Line-Wrapping
 
 > Terminology note: **Line-wrapping** is the activity of dividing code into
 > multiple lines that might otherwise legally occupy a single line.
 
-Line-wrapping is done by the formatter. It wraps any line that exceeds the
-column limit, and it keeps the line breaks that you write yourself, so you may
-also wrap a shorter line when that makes it easier to read. The rules below
-describe the layout the formatter produces. Code written this way is left
-unchanged by the formatter.
+Any line that exceeds the column limit is line-wrapped. A shorter line may also
+be wrapped when that makes it easier to read.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 > The examples in this section are wrapped as if the column limit were much
-> narrower than 180 columns, so that they fit on the page. The formatter applies
-> the same rules at 180 columns.
+> narrower than 180 columns, so that they fit on the page.
 
 For the purposes of this style, many declarations (such as type declarations
 and function declarations) and other expressions (like function calls) can be
@@ -472,13 +516,11 @@ breakable sequences are indicated in blue.
 Using these concepts, the cardinal rules for line-wrapping are:
 
 1. If the entire declaration, statement, or expression fits on one line, it can
-   stay on one line. The formatter only adds line breaks when a line exceeds the
-   column limit.
+   stay on one line.
 1. When a comma-delimited list doesn't fit, the line breaks after the opening
-   delimiter and the elements continue on the following lines. The formatter
-   fills each continuation line with as many elements as fit; it does not force
-   one element per line. If you write one element per line, the formatter keeps
-   that layout. Match the surrounding code.
+   delimiter and the elements continue on the following lines. Each
+   continuation line may be filled with as many elements as fit, or the list may
+   be written with one element per line. Match the surrounding code.
 1. A continuation line starting with an unbreakable token sequence is indented
    at the same level as the original line.
 1. A continuation line that is part of a comma-delimited list is indented
@@ -550,6 +592,8 @@ public func index<Elements: Collection, Element>(of element: Element,  // AVOID.
 ~~~
 {:.bad}
 
+</details>
+
 #### Function Declarations
 
 <pre class="lw-container">
@@ -585,6 +629,9 @@ public func index<Elements: Collection, Element>(
 }
 ~~~
 {:.good}
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 When a wrapped function declaration has a body or a return type, its closing
 parenthesis (`)`) is placed on its own line. A function declaration in a
@@ -629,12 +676,17 @@ public func performanceTrackingIndex<Elements: Collection, Element>(
 However, `typealias`es or some other means are often a better way to simplify
 complex declarations whenever possible.
 
+</details>
+
 #### Type and Extension Declarations
 
 The examples below apply equally to `class`, `struct`, `enum`, `extension`, and
 `protocol` (with the obvious exception that all but the first do not have
 superclasses in their inheritance list, but they are otherwise structurally
 similar).
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 <pre class="lw-container">
 <span class="lw-ub"><em>modifiers</em> class <em>Name</em></span>{
@@ -686,12 +738,17 @@ where
 ~~~
 {:.good}
 
+</details>
+
 #### Function Calls
 
 When a function call is line-wrapped, the line breaks after the opening
 parenthesis and the arguments continue on the following lines, indented +4 from
-the original line. The formatter fills each line with as many arguments as fit;
-if you write one argument per line, that layout is kept.
+the original line. Each line may be filled with as many arguments as fit, or
+the arguments may be written one per line.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 As with function declarations, if the function call terminates its enclosing
 statement and ends with a closing parenthesis (`)`) (that is, it has no trailing
@@ -727,6 +784,8 @@ someAsynchronousAction.execute(withDelay: howManySeconds, context: actionContext
 ~~~
 {:.good}
 
+</details>
+
 #### Control Flow Statements
 
 When the condition list of an `if`, `guard`, or `while` statement is wrapped,
@@ -734,6 +793,9 @@ each condition goes on its own line, indented +4 from the beginning of the
 statement. When a single condition is wrapped at a binary operator, the line
 breaks **before** the operator, and the continuation line is indented +4 from
 the beginning of the statement.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 Because those continuation lines are indented +4, the open brace (`{`) preceding
 the body is placed on its own line, at the same indentation level as the
@@ -783,12 +845,17 @@ guard let value = aValueReturnedByAVeryLongOptionalThing(),
 ~~~
 {:.bad}
 
+</details>
+
 #### Other Expressions
 
 When line-wrapping other expressions that are not function calls (as described
 above), a line break is placed after the `=` of an assignment first, and then
 **before** binary operators. Continuation lines are indented +4 from the
 original line, and each further level of nesting adds another +4.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 If there are many continuation lines caused by long wrapped expressions,
 consider splitting them into multiple statements using temporary variables when
@@ -808,6 +875,8 @@ let result = anExpression + thatIsMadeUpOf * aLargeNumber +
         andWeWill - keepMakingItLonger * soThatWeHave / aContrivedExample)
 ~~~
 {:.bad}
+
+</details>
 
 ### Horizontal Whitespace
 
@@ -1064,8 +1133,7 @@ places **only**:
       {:.bad}
 
 1. Exactly two spaces before and exactly one space after the double slash
-   (`//`) that begins an end-of-line comment. The formatter sets the two spaces
-   before the comment.
+   (`//`) that begins an end-of-line comment.
 
    ~~~ swift
    let initialFactor = 2  // Warm up the modulator.
@@ -1099,8 +1167,10 @@ places **only**:
 Horizontal alignment is not used. Lining up tokens (for example, the types of
 stored property declarations in a `struct` or `class`) is an invitation for
 maintenance problems if a new member is introduced that requires every other
-member to be realigned. The formatter also collapses the extra spaces, so
-alignment would not survive the next format pass, even for tabular data.
+member to be realigned. This applies even to tabular data.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 ~~~ swift
 struct DataPoint {
@@ -1117,6 +1187,8 @@ struct DataPoint {
 }
 ~~~
 {:.bad}
+
+</details>
 
 ### Vertical Whitespace
 
@@ -1138,13 +1210,20 @@ A single blank line appears in the following locations:
    (neither is encouraged nor discouraged).
 1. Anywhere explicitly required by other sections of this document.
 
-There is **at most one** blank line in a row. The formatter removes any
-additional consecutive blank lines.
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
+
+There is **at most one** blank line in a row.
+
+</details>
 
 ### Parentheses
 
 Parentheses are **not** used around the top-most expression that follows an
-`if`, `guard`, `while`, or `switch` keyword. The formatter removes them.
+`if`, `guard`, `while`, or `switch` keyword.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 ~~~ swift
 if x == 0 {
@@ -1174,22 +1253,26 @@ without them, nor that they would have made the code easier to read. It is _not_
 reasonable to assume that every reader has the entire Swift operator precedence
 table memorized.
 
+</details>
+
 ## Formatting Specific Constructs
 
 ### Non-Documentation Comments
 
 Non-documentation comments normally use the double-slash format (`//`). The
-C-style block format (`/* ... */`) is allowed and is not flagged by the linter,
-but `//` is preferred; follow the surrounding code.
+C-style block format (`/* ... */`) is allowed, but `//` is preferred; follow
+the surrounding code.
 
 ### Properties
 
 Local variables are declared close to the point at which they are first used
 (within reason) to minimize their scope.
 
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
+
 With the exception of tuple destructuring, every `let` or `var` statement
-(whether a property or a local variable) declares exactly one variable. The
-formatter splits statements that declare more than one.
+(whether a property or a local variable) declares exactly one variable.
 
 ~~~ swift
 var a = 5
@@ -1204,11 +1287,16 @@ var a = 5, b = 10
 ~~~
 {:.bad}
 
+</details>
+
 ### Switch Statements
 
 Case statements are indented at the _same_ level as the switch statement to
 which they belong; the statements inside the case blocks are then indented +4
 spaces from that level.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 ~~~ swift
 switch order {
@@ -1246,14 +1334,17 @@ print("Same")
 ~~~
 {:.bad}
 
+</details>
+
 ### Enum Cases
 
 In general, there is only one `case` per line in an `enum`. The comma-delimited
 form may be used only when none of the cases have associated values or raw
 values, all cases fit on a single line, and the cases do not need further
-documentation because their meanings are obvious from their names. The
-formatter moves any case with associated values or a raw value onto its own
-line.
+documentation because their meanings are obvious from their names.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 ~~~ swift
 public enum Token {
@@ -1282,8 +1373,7 @@ public enum Token {
 {:.bad}
 
 When all cases of an `enum` must be `indirect`, the `enum` itself is declared
-`indirect` and the keyword is omitted on the individual cases. The formatter
-makes this change automatically.
+`indirect` and the keyword is omitted on the individual cases.
 
 ~~~ swift
 public indirect enum DependencyGraphNode {
@@ -1359,13 +1449,17 @@ public enum HTTPStatus: Int {
 ~~~
 {:.bad}
 
+</details>
+
 ### Trailing Closures
 
 Functions should not be overloaded such that two overloads differ _only_ by the
 name of their trailing closure argument. Doing so prevents using trailing
 closure syntax&mdash;when the label is not present, a call to the function with
-a trailing closure is ambiguous. (The linter does not check this rule, so it is
-up to the author and the reviewer.)
+a trailing closure is ambiguous.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 Consider the following example, which prohibits using trailing closure syntax to
 call `greet`:
@@ -1402,7 +1496,7 @@ greetApathetically { "not John" }
 
 If a function call has multiple closure arguments, then _none_ are called using
 trailing closure syntax; _all_ are labeled and nested inside the argument
-list's parentheses. The linter flags calls that mix the two.
+list's parentheses.
 
 ~~~ swift
 UIView.animate(
@@ -1461,8 +1555,7 @@ if let firstActive = list.first { $0.isActive } {
 {:.bad}
 
 When a function called with trailing closure syntax takes no other arguments,
-empty parentheses (`()`) after the function name are _never_ present. The
-formatter removes them.
+empty parentheses (`()`) after the function name are _never_ present.
 
 ~~~ swift
 let squares = [1, 2, 3].map { $0 * $0 }
@@ -1475,11 +1568,16 @@ let squares = [1, 2, 3].map() { $0 * $0 }
 ~~~
 {:.bad}
 
+</details>
+
 ### Trailing Commas
 
 Trailing commas in array and dictionary literals are _required_ when each
 element is placed on its own line. Doing so produces cleaner diffs when items
-are added to those literals later. The formatter adds them.
+are added to those literals later.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 ~~~ swift
 let configurationKeys = [
@@ -1499,19 +1597,24 @@ let configurationKeys = [
 ~~~
 {:.bad}
 
+</details>
+
 ### Numeric Literals
 
 Long integer literals use the underscore (`_`) separator to group digits for
-readability. The formatter inserts the separators automatically:
+readability:
 
 * decimal literals with 7 or more digits are grouped every three digits
   (thousands separators);
 * hexadecimal literals with 8 or more digits are grouped every four digits;
 * binary literals with 10 or more digits are grouped every eight digits.
 
-Octal and floating-point literals are left as written. A literal that already
-contains an underscore is also left as written, so a value-specific grouping
-(such as field boundaries in a bit mask) is kept.
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
+
+Octal and floating-point literals do not need separators. A value-specific
+grouping (such as field boundaries in a bit mask) may be used instead of these
+groupings.
 
 ~~~ swift
 let population = 8_100_000_000
@@ -1526,12 +1629,17 @@ let mask = 0xFFFF0000
 ~~~
 {:.bad}
 
+</details>
+
 ### Attributes
 
 Parameterized attributes (such as `@availability(...)` or `@objc(...)`) are each
 written on their own line immediately before the declaration to which they
 apply, are lexicographically ordered, and are indented at the same level as the
 declaration.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 ~~~ swift
 @available(iOS 9.0, *)
@@ -1563,6 +1671,7 @@ public class MyViewController: UIViewController {
 ~~~
 {:.good}
 
+</details>
 
 ## Naming
 
@@ -1577,8 +1686,10 @@ if they were repeated here in their entirety.
 
 Types and protocols are `UpperCamelCase`. Everything else&mdash;functions,
 methods, properties, variables, constants, enum cases, and parameters&mdash;is
-`lowerCamelCase` and contains no underscores. The linter flags names that break
-these rules.
+`lowerCamelCase` and contains no underscores.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 Test functions are the one exception: a function marked `@Test`, or one whose
 name starts with `test` in a file that imports a test library, may use
@@ -1603,11 +1714,16 @@ struct downloadQueue {
 ~~~
 {:.bad}
 
+</details>
+
 ### Naming Conventions Are Not Access Control
 
 Restricted access control (`internal`, `fileprivate`, or `private`) is preferred
 for the purposes of hiding information from clients, rather than naming
 conventions.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 Naming conventions (such as prefixing a leading underscore) are only used in
 rare situations when a declaration must be given higher visibility than is
@@ -1616,16 +1732,19 @@ example, a type that has a method that is only intended to be called by other
 parts of a library implementation that crosses module boundaries and must
 therefore be declared `public`.
 
-This is a preference rather than a checked rule: the linter does not flag
-leading underscores.
+This is a preference rather than a strict rule.
+
+</details>
 
 ### Identifiers
 
 Identifiers contain only 7-bit ASCII characters. This includes names that would
 have a clear meaning in the problem domain, such as Greek letters for
 mathematical concepts; spell those out instead. Non-ASCII text belongs in string
-literals, not in names. The linter flags any identifier that contains a
-non-ASCII character.
+literals, not in names.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 ~~~ swift
 let smile = "😊"
@@ -1639,11 +1758,16 @@ let Δx = newX - previousX
 ~~~
 {:.bad}
 
+</details>
+
 ### Initializers
 
 For clarity, initializer arguments that correspond directly to a stored property
 have the same name as the property. Explicit `self.` is used during assignment
 to disambiguate them.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 ~~~ swift
 public struct Person {
@@ -1673,11 +1797,15 @@ public struct Person {
 ~~~
 {:.bad}
 
+</details>
+
 ### Static and Class Properties
 
 Static and class properties that return instances of the declaring type are
-_not_ suffixed with the name of the type. The linter flags properties that
-repeat the type name.
+_not_ suffixed with the name of the type.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 ~~~ swift
 public class UIColor {
@@ -1714,10 +1842,15 @@ declaring type, the names `shared` and `default` are commonly used. This style
 guide does not require specific names for these; the author should choose a name
 that makes sense for the type.
 
+</details>
+
 ### Global Constants
 
 Like other variables, global constants are `lowerCamelCase`. Hungarian notation,
 such as a leading `g` or `k`, is not used.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 ~~~ swift
 let secondsPerMinute = 60
@@ -1732,11 +1865,16 @@ let SECONDS_PER_MINUTE = 60
 ~~~
 {:.bad}
 
+</details>
+
 ### Delegate Methods
 
 Methods on delegate protocols and delegate-like protocols (such as data sources)
 are named using the linguistic syntax described below, which is inspired by
 Cocoa's protocols.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 > The term "delegate's source object" refers to the object that invokes methods
 > on the delegate. For example, a `UITableView` is the source object that
@@ -1827,6 +1965,8 @@ Apple's documentation on
 [delegates and data sources](https://developer.apple.com/library/content/documentation/General/Conceptual/CocoaEncyclopedia/DelegatesandDataSources/DelegatesandDataSources.html)
 also contains some good general guidance about such names.
 
+</details>
+
 ## Programming Practices
 
 Common themes among the rules in this section are: avoid redundancy, avoid
@@ -1838,18 +1978,25 @@ improves readability and/or reduces ambiguity.
 Code should compile without warnings when feasible. Any warnings that are able
 to be removed easily by the author must be removed.
 
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
+
 A reasonable exception is deprecation warnings, where it may not be possible to
 immediately migrate to the replacement API, or where an API may be deprecated
 for external users but must still be supported inside a library during a
 deprecation period.
+
+</details>
 
 ### Initializers
 
 For `struct`s, Swift synthesizes a non-public memberwise `init` that takes
 arguments for `var` properties and for any `let` properties that lack default
 values. When that initializer is suitable (that is, a `public` one is not
-needed), it is used and no explicit initializer is written. The linter flags a
-non-public initializer that is identical to the synthesized one.
+needed), it is used and no explicit initializer is written.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 The initializers declared by the special `ExpressibleBy*Literal` compiler
 protocols are never called directly.
@@ -1897,11 +2044,15 @@ let x = MyType.init(arguments)
 ~~~
 {:.bad}
 
+</details>
+
 ### Properties
 
 The `get` block for a read-only computed property is omitted and its body is
-directly nested inside the property declaration. The formatter removes the
-`get` block.
+directly nested inside the property declaration.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 ~~~ swift
 var totalCost: Int {
@@ -1919,14 +2070,18 @@ var totalCost: Int {
 ~~~
 {:.bad}
 
+</details>
+
 ### Types with Shorthand Names
 
 Arrays, dictionaries, and optional types are written in their shorthand form
 whenever possible; that is, `[Element]`, `[Key: Value]`, and `Wrapped?`. The
 long forms `Array<Element>`, `Dictionary<Key, Value>`, and `Optional<Wrapped>`
 are only written when required by the compiler; for example, the Swift parser
-requires `Array<Element>.Index` and does not accept `[Element].Index`. The
-formatter rewrites the long forms wherever the short form is valid.
+requires `Array<Element>.Index` and does not accept `[Element].Index`.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 ~~~ swift
 func enumeratedDictionary<Element>(
@@ -1959,9 +2114,6 @@ the function signature `Void -> Result` is an error in Swift because function
 arguments must be surrounded by parentheses, and `(Void)` has a different
 meaning: an argument list with a single empty-tuple argument.)
 
-The formatter removes `-> Void` from `func` declarations and rewrites `-> ()`
-in function types to `-> Void`.
-
 ~~~ swift
 func doSomething() {
     // ...
@@ -1984,12 +2136,17 @@ let callback: () -> ()
 ~~~
 {:.bad}
 
+</details>
+
 ### Optional Types
 
 Sentinel values are avoided when designing algorithms (for example, an "index"
 of &minus;1 when an element was not found in a collection). Sentinel values can
 easily and accidentally propagate through other layers of logic because the type
 system cannot distinguish between them and valid outcomes.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 `Optional` is used to convey a non-error result that is either a value or the
 absence of a value. For example, when searching a collection for a value, not
@@ -2051,8 +2208,7 @@ if value != nil {
 ~~~
 {:.good}
 
-The following form is also accepted, and neither the formatter nor the linter
-changes it. It is not preferred: while taking advantage of Swift's pattern
+The following form is also accepted. It is not preferred: while taking advantage of Swift's pattern
 matching and binding syntax, it obscures the intent by appearing to unwrap the
 value and then immediately throw it away.
 
@@ -2063,9 +2219,14 @@ if let _ = value {
 ~~~
 {:.good}
 
+</details>
+
 ### Error Types
 
 Error types are used when there are multiple possible error states.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 Throwing errors instead of merging them with the return type cleanly separates
 concerns in the API. Valid inputs and valid state produce valid outputs in the
@@ -2112,7 +2273,7 @@ followed by `fatalError` but without a meaningful message. If an error outcome
 would mean that the program is in such an unrecoverable state that immediate
 termination is the only reasonable action, it is better to use `do`-`catch` or
 `try?` and provide more context in the error message to assist debugging if the
-operation does fail. The linter flags every `try!` outside test code.
+operation does fail.
 
 This includes cases where the error could only come from a programmer's
 mistake, such as building a regular expression from a string literal. For a
@@ -2130,16 +2291,20 @@ let regex = try! NSRegularExpression(pattern: "a*b+c?")
 {:.bad}
 
 > **Exception:** Force-`try!` is allowed in unit tests and test-only code. For
-> the linter, test code is a file that imports a test library (such as
+> this rule, test code is a file that imports a test library (such as
 > `Testing` or `XCTest`), or a function marked `@Test`.
+
+</details>
 
 ### Force Unwrapping and Force Casts
 
 Force-unwrapping (`!`) and force-casting (`as!`) are not used outside test
-code. The linter flags both, even when a comment explains why the operation is
-safe. Unwrap with `guard let` or `if let`, or cast with `as?`, and handle the
+code, even when a comment explains why the operation is safe. Unwrap with `guard let` or `if let`, or cast with `as?`, and handle the
 failure explicitly; if a failure means the program cannot continue, say why in
 a `fatalError` or `preconditionFailure` message.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 ~~~ swift
 let value = getSomeInteger()
@@ -2170,12 +2335,16 @@ return SomeEnum(rawValue: value)!
 > operation is to an incompatible type, the test will fail which is the desired
 > result.
 
+</details>
+
 ### Implicitly Unwrapped Optionals
 
 Implicitly unwrapped optionals are inherently unsafe and are not declared,
-in favor of non-optional declarations or regular `Optional` types. The linter
-flags every declaration with an implicitly unwrapped type, with the exceptions
-described below.
+in favor of non-optional declarations or regular `Optional` types, with the
+exceptions described below.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 `@IBOutlet` properties connected to objects in a XIB file or storyboard are
 allowed to use implicitly unwrapped optionals, because their lifetime is based
@@ -2216,6 +2385,8 @@ reasons similar to the UI object scenario above&mdash;the lifetime of test
 fixtures often begins not in the test's initializer but in the `setUp()` method
 of a test so that they can be reset before the execution of each test.
 
+</details>
+
 ### Access Levels
 
 Omitting an explicit access level is permitted on declarations. For top-level
@@ -2223,10 +2394,12 @@ declarations, the default access level is `internal`. For nested declarations,
 the default access level is the lesser of `internal` and the access level of the
 enclosing declaration.
 
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
+
 Specifying an explicit access level at the file level on an extension is
 forbidden. Each member of the extension has its access level specified if it is
-different than the default. The formatter moves an access level written on an
-extension onto its members.
+different than the default.
 
 ~~~ swift
 extension String {
@@ -2254,12 +2427,17 @@ public extension String {
 ~~~
 {:.bad}
 
+</details>
+
 ### Nesting and Namespacing
 
 Swift allows `enum`s, `struct`s, and `class`es to be nested, so nesting is
 preferred (instead of naming conventions) to express scoped and hierarchical
 relationships among types when possible. For example, flag `enum`s or error
 types that are associated with a specific type are nested in that type.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 ~~~ swift
 class Parser {
@@ -2320,11 +2498,16 @@ struct Dimensions {
 ~~~
 {:.bad}
 
+</details>
+
 ### `guard`s for Early Exits
 
 A `guard` statement, compared to an `if` statement with an inverted condition,
 provides visual emphasis that the condition being tested is a special case that
 causes early exit from the enclosing scope.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 Furthermore, `guard` statements improve readability by eliminating extra levels
 of nesting (the "pyramid of doom"); failure conditions are closely coupled to
@@ -2378,17 +2561,21 @@ A `guard`-`continue` statement can also be useful in a loop to avoid increased
 indentation when the entire body of the loop should only be executed in some
 cases (but see also the `for`-`where` discussion below.)
 
-The formatter applies the simplest case of this rule automatically: an `if`
-statement whose `else` block ends with `return`, `throw`, `break`, or
-`continue` is rewritten as a `guard` statement followed by the code from the
-`if` block.
+In particular, an `if` statement whose `else` block ends with `return`,
+`throw`, `break`, or `continue` is written as a `guard` statement followed by
+the code from the `if` block.
+
+</details>
 
 ### `for`-`where` Loops
 
 When the entirety of a `for` loop's body would be a single `if` block testing a
 condition of the element, the test may be placed in the `where` clause of the
-`for` statement instead. This is preferred but not required, and the linter does
-not check it; follow the surrounding code.
+`for` statement instead. This is preferred but not required; follow the
+surrounding code.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 ~~~ swift
 for item in collection where item.hasProperty {
@@ -2408,12 +2595,17 @@ for item in collection {
 ~~~
 {:.good}
 
+</details>
+
 ### `fallthrough` in `switch` Statements
 
 When multiple `case`s of a `switch` would execute the same statements, the
 `case` patterns are combined into ranges or comma-delimited lists. Multiple
 `case` statements that do nothing but `fallthrough` to a `case` below are not
 allowed.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 ~~~ swift
 switch value {
@@ -2440,8 +2632,9 @@ default: break
 
 In other words, there is never a `case` whose body contains _only_ the
 `fallthrough` statement. Cases containing _additional_ statements which then
-fallthrough to the next case are permitted. The formatter merges cases whose
-only statement is `fallthrough` into the case that follows them.
+fallthrough to the next case are permitted.
+
+</details>
 
 ### Pattern Matching
 
@@ -2449,7 +2642,10 @@ The `let` and `var` keywords are placed individually in front of _each_ element
 in a pattern that is being matched. The shorthand version of `let`/`var` that
 precedes and distributes across the entire pattern is forbidden because it can
 introduce unexpected behavior if a value being matched in a pattern is itself a
-variable. The formatter moves a distributed `let` or `var` onto each binding.
+variable.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 ~~~ swift
 enum DataPoint {
@@ -2491,8 +2687,7 @@ case let .labeled(label, value):
 {:.bad}
 
 Labels of tuple arguments and `enum` associated values are omitted when binding
-a value to a variable with the same name as the label. The formatter removes
-them.
+a value to a variable with the same name as the label.
 
 ~~~ swift
 enum BinaryTree<Element> {
@@ -2522,11 +2717,16 @@ case .leaf(element: let element):
 ~~~
 {:.bad}
 
+</details>
+
 ### Tuple Patterns
 
 Assigning variables through a tuple pattern (sometimes referred to as a _tuple
 shuffle_) is only permitted if the left-hand side of the assignment is
 unlabeled.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 ~~~ swift
 let (a, b) = (y: 4, x: 5.0)
@@ -2549,6 +2749,8 @@ let (x: Int, y: Double) = (y: 4, x: 5.0)
 ~~~
 {:.bad}
 
+</details>
+
 ### Numeric and String Literals
 
 Integer and string literals in Swift do not have an intrinsic type. For example,
@@ -2558,6 +2760,9 @@ any type that conforms to `ExpressibleByIntegerLiteral` and only becomes an
 literal `"x"` is neither `String` nor `Character` nor `UnicodeScalar`, but it
 can become any of those types depending on its context, falling back to `String`
 as a default.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 Thus, when a literal is used to initialize a value of a type other than its
 default, and when that type cannot be inferred otherwise by context, specify the
@@ -2628,12 +2833,16 @@ let c = Character("ab")
 ~~~
 {:.bad}
 
+</details>
+
 ### Playground Literals
 
 The graphically-rendered playground literals `#colorLiteral(...)`,
 `#imageLiteral(...)`, and `#fileLiteral(...)` are forbidden in non-playground
-production code. They are permitted in playground sources. The linter flags
-them.
+production code. They are permitted in playground sources.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 ~~~ swift
 let color = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
@@ -2645,12 +2854,17 @@ let color = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 ~~~
 {:.bad}
 
+</details>
+
 ### Trapping vs. Overflowing Arithmetic
 
 The standard (trapping-on-overflow) arithmetic and bitwise operators (`+`, `-`,
 `*`, `<<`, and `>>`) are used for most normal operations, rather than the
 masking operations (preceded by `&`). Trapping on overflow is safer because it
 prevents bad data from propagating through other layers of the system.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 ~~~ swift
 // GOOD. Overflow will not cause the balance to go negative.
@@ -2694,11 +2908,16 @@ masking operations is important. Additionally, consider adding debug
 preconditions to check these assumptions without affecting performance of
 optimized builds.
 
+</details>
+
 ### Defining New Operators
 
 When used unwisely, custom-defined operators can significantly reduce the
 readability of code because such operators often lack the historical context of
 the more common ones built into the standard library.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 In general, defining custom operators should be avoided. However, it is allowed
 when an operator has a clear and well-defined meaning in the problem domain
@@ -2720,12 +2939,17 @@ consider writing a wrapper that defines more readable methods that delegate to
 the custom operators. This will significantly reduce the learning curve required
 to understand how such code works for new teammates and other code reviewers.
 
+</details>
+
 ### Overloading Existing Operators
 
 Overloading operators is permitted when your use of the operator is semantically
 equivalent to the existing uses in the standard library. Examples of permitted
 use cases are implementing the operator requirements for `Equatable` and
 `Hashable`, or defining a new `Matrix` type that supports arithmetic operations.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 If you wish to overload an existing operator with a meaning other than its
 natural meaning, follow the guidance in
@@ -2739,10 +2963,15 @@ and `+` to build an ad hoc regular expression API. Such an API would not provide
 strong enough readability benefits compared to simply representing the entire
 regular expression as a string.
 
+</details>
+
 ### Implicit Returns
 
 Functions, closures, computed property getters, and subscripts whose body is a
-single expression omit the `return` keyword. The formatter removes it.
+single expression omit the `return` keyword.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 ~~~ swift
 var isEmpty: Bool {
@@ -2768,12 +2997,16 @@ func area(of rectangle: Rectangle) -> Double {
 ~~~
 {:.bad}
 
+</details>
+
 ### Assignments in Expressions
 
 An assignment is its own statement. It is never used where an expression is
 expected, such as in a `return` statement of a function that returns `Void`.
-The formatter splits such a `return` into the assignment followed by a separate
-`return`. (Assignments passed to `XCTAssertNoThrow` are allowed.)
+Such a `return` is written as the assignment followed by a separate `return`. (Assignments passed to `XCTAssertNoThrow` are allowed.)
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 ~~~ swift
 func resetCounter() {
@@ -2789,11 +3022,16 @@ func resetCounter() {
 ~~~
 {:.bad}
 
+</details>
+
 ### `forEach` and `for`-`in` Loops
 
 Loops over a sequence are written with `for`-`in`, not with `forEach` and a
 closure. Calling `forEach` is allowed when its argument is a reference to an
-existing function. The linter flags other uses of `forEach`.
+existing function.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 ~~~ swift
 for request in pendingRequests {
@@ -2811,10 +3049,15 @@ pendingRequests.forEach { request in
 ~~~
 {:.bad}
 
+</details>
+
 ### Concurrency
 
 Code is written for the Swift 6 language mode and its strict concurrency
 checking.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 * Types whose values are shared across concurrency domains (passed between
   tasks or actors) conform to `Sendable`.
@@ -2838,10 +3081,15 @@ struct Connection: Sendable {
 ~~~
 {:.bad}
 
+</details>
+
 ### Tests
 
 New tests are written with Swift Testing (`import Testing`, `@Test`, and
 `#expect`), unless the project's existing tests use XCTest.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 ~~~ swift
 import Testing
@@ -2855,13 +3103,18 @@ import Testing
 ~~~
 {:.good}
 
+</details>
+
 ## Documentation Comments
 
 ### General Format
 
 Documentation comments are written using the format where each line is preceded
 by a triple slash (`///`). Javadoc-style block comments (`/** ... */`) are not
-permitted; the formatter converts them to `///` comments.
+permitted.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 ~~~ swift
 /// Returns the numeric value of the given digit represented as a Unicode scalar.
@@ -2903,13 +3156,18 @@ func numericValue(of digit: UnicodeScalar, radix: Int = 10) -> Int {
 ~~~
 {:.bad}
 
+</details>
+
 ### Single-Sentence Summary
 
 Documentation comments should begin with a brief **single-sentence** summary
 that describes the declaration. (This sentence may span multiple lines, but if
 it spans too many lines, the author should consider whether the summary can be
-simplified and details moved to a new paragraph.) This is a recommendation; the
-linter does not check it.
+simplified and details moved to a new paragraph.) This is a recommendation, not
+a requirement.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 If more detail is needed than can be stated in the summary, additional
 paragraphs (each separated by a blank line) are added after it.
@@ -2949,6 +3207,8 @@ func sum(_ numbers: [Int]) -> Int {
 ~~~
 {:.bad}
 
+</details>
+
 ### Parameter, Returns, and Throws Tags
 
 Clearly document the parameters, return value, and thrown errors of functions
@@ -2956,6 +3216,9 @@ using the `Parameter(s)`, `Returns`, and `Throws` tags, in that order. None ever
 appears with an empty description. When a description does not fit on a single
 line, continuation lines are indented 2 spaces in from the position of the
 hyphen starting the tag.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 The recommended way to write documentation comments in Xcode is to place the
 text cursor on the declaration and press **Command + Option + /**. This will
@@ -2974,8 +3237,8 @@ When a method takes a single argument, the singular inline form of the
 plural form `Parameters` is used and each argument is written as an item in a
 nested list with only its name as the tag.
 
-The linter checks every function documentation comment that has more than a
-summary:
+Every function documentation comment that has more than a summary follows
+these rules:
 
 * the documented parameters match the function's parameters, and use the
   singular or plural form described above;
@@ -3036,6 +3299,8 @@ func execute(command: String, stdin: String) -> String {
 ~~~
 {:.bad}
 
+</details>
+
 ### Apple's Markup Format
 
 Use of
@@ -3044,6 +3309,9 @@ is strongly encouraged to add rich formatting to documentation. Such markup
 helps to differentiate symbolic references (like parameter names) from
 descriptive text in comments and is rendered by Xcode and other documentation
 generation tools. Some examples of frequently used directives are listed below.
+
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
 
 * Paragraphs are separated using a single line that starts with `///` and is
   otherwise blank.
@@ -3055,12 +3323,14 @@ generation tools. Some examples of frequently used directives are listed below.
 * Multi-line code (such as example usage) is denoted by placing three backticks
   (` ``` `) on the lines before and after the code block.
 
+</details>
+
 ### Where to Document
 
 Documentation comments are recommended for every open or public declaration,
-and every open or public member of such a declaration. They are not required,
-and the linter does not check that they are present; follow the surrounding
-code. When deciding what to document, keep the following exceptions in mind:
+and every open or public member of such a declaration. They are not required;
+follow the surrounding code. When deciding what to document, keep the following
+exceptions in mind:
 
 * Individual cases of an `enum` often are not documented if their meaning is
   self-explanatory from their name. Cases with associated values, however,
@@ -3111,6 +3381,9 @@ code. When deciding what to document, keep the following exceptions in mind:
   ~~~
   {:.bad}
 
+<details class="more" markdown="1">
+<summary><span class="more-label">More detail</span><span class="less-label">Less detail</span></summary>
+
 In general, if you find yourself writing documentation that simply repeats
 information that is obvious from the source and sugaring it with words like
 "a representation of," then leave the comment out entirely.
@@ -3122,96 +3395,4 @@ rationale that it would only say `/// The canonical name.`) if a typical reader
 may have no idea what the term "canonical name" means in that context. Use the
 documentation as an opportunity to define the term.
 
-## Tooling
-
-### Formatting and Linting
-
-Code is formatted and linted with [swift-format](https://github.com/swiftlang/swift-format),
-which is included in the Swift 6 toolchain as `swift format`. Before finishing a
-change:
-
-1. Format the files you changed with `swift format -i <files>`. swift-format
-   uses the nearest `.swift-format` file above each source file.
-1. Lint the same files with `swift format lint --strict <files>`, and fix every
-   finding.
-
-Generated files, such as `*.pb.swift` and `*.grpc.swift`, are never edited or
-formatted by hand.
-
-### Configuration
-
-The configuration below is the swift-format configuration that the rules in
-this style guide follow. A project that has no `.swift-format` file gets one at
-its root with this configuration. Rules set to `false`, and any rule that is not
-listed, are off.
-
-~~~ json
-{
-  "fileScopedDeclarationPrivacy" : {
-    "accessLevel" : "private"
-  },
-  "indentation" : {
-    "spaces" : 4
-  },
-  "indentConditionalCompilationBlocks" : false,
-  "indentSwitchCaseLabels" : false,
-  "lineBreakAroundMultilineExpressionChainComponents" : false,
-  "lineBreakBeforeControlFlowKeywords" : false,
-  "lineBreakBeforeEachArgument" : false,
-  "lineBreakBeforeEachGenericRequirement" : false,
-  "lineLength" : 180,
-  "maximumBlankLines" : 1,
-  "multiElementCollectionTrailingCommas" : true,
-  "noAssignmentInExpressions" : {
-    "allowedFunctions" : [
-      "XCTAssertNoThrow"
-    ]
-  },
-  "prioritizeKeepingFunctionOutputTogether" : false,
-  "respectsExistingLineBreaks" : true,
-  "rules" : {
-    "AllPublicDeclarationsHaveDocumentation" : false,
-    "AlwaysUseLowerCamelCase" : true,
-    "AmbiguousTrailingClosureOverload" : false,
-    "BeginDocumentationCommentWithOneLineSummary" : false,
-    "DoNotUseSemicolons" : true,
-    "DontRepeatTypeInStaticProperties" : true,
-    "FileScopedDeclarationPrivacy" : true,
-    "FullyIndirectEnum" : true,
-    "GroupNumericLiterals" : true,
-    "IdentifiersMustBeASCII" : true,
-    "NeverForceUnwrap" : true,
-    "NeverUseForceTry" : true,
-    "NeverUseImplicitlyUnwrappedOptionals" : true,
-    "NoAccessLevelOnExtensionDeclaration" : true,
-    "NoAssignmentInExpressions" : true,
-    "NoBlockComments" : false,
-    "NoCasesWithOnlyFallthrough" : true,
-    "NoEmptyTrailingClosureParentheses" : true,
-    "NoLabelsInCasePatterns" : true,
-    "NoLeadingUnderscores" : false,
-    "NoParensAroundConditions" : true,
-    "NoPlaygroundLiterals" : true,
-    "NoVoidReturnOnFunctionSignature" : true,
-    "OmitExplicitReturns" : true,
-    "OneCasePerLine" : true,
-    "OneVariableDeclarationPerLine" : true,
-    "OnlyOneTrailingClosureArgument" : true,
-    "OrderedImports" : true,
-    "ReplaceForEachWithForLoop" : true,
-    "ReturnVoidInsteadOfEmptyTuple" : true,
-    "TypeNamesShouldBeCapitalized" : true,
-    "UseEarlyExits" : true,
-    "UseLetInEveryBoundCaseVariable" : true,
-    "UseShorthandTypeNames" : true,
-    "UseSingleLinePropertyGetter" : true,
-    "UseSynthesizedInitializer" : true,
-    "UseTripleSlashForDocumentationComments" : true,
-    "UseWhereClausesInForLoops" : false,
-    "ValidateDocumentationComments" : true
-  },
-  "spacesAroundRangeFormationOperators" : false,
-  "tabWidth" : 2,
-  "version" : 1
-}
-~~~
+</details>
